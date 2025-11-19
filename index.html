@@ -17,7 +17,8 @@
     <p style="margin-bottom: 15px; font-size: 0.9em; color: #aaa;">Guess the mystery country!</p>
 
     <div class="input-group">
-      <input type="text" id="guess-input" list="country-list" placeholder="Enter country..." />
+      <input type="text" id="guess-input" list="country-list" placeholder="Enter country..." autocomplete="off"
+        autocapitalize="words" spellcheck="false" />
       <datalist id="country-list"></datalist>
       <button id="submit-btn">Guess</button>
     </div>

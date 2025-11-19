@@ -48,7 +48,6 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 15;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.getElementById('app').appendChild(renderer.domElement);
 
@@ -88,10 +87,20 @@ animate();
 
 // Window Resize
 window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  const container = document.getElementById('app');
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(width, height);
 });
+
+// Initial size setup
+const container = document.getElementById('app');
+renderer.setSize(container.clientWidth, container.clientHeight);
+camera.aspect = container.clientWidth / container.clientHeight;
+camera.updateProjectionMatrix();
 
 // Game Logic
 function setupGame() {

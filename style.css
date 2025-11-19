@@ -5,7 +5,8 @@
 
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #1a1a1a; /* Fallback */
+  background-color: #1a1a1a;
+  /* Fallback */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,9 +20,10 @@ body {
   overflow: hidden;
   background-color: #000;
   display: flex;
-  place-items: center;
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
+  height: 100vh;
 }
 
 #app {
@@ -44,6 +46,60 @@ body {
   border-radius: 12px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  #app {
+    position: relative;
+    height: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  #ui-layer {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    max-width: 100%;
+    border-radius: 12px 12px 0 0;
+    max-height: none;
+    padding: 15px;
+    flex-shrink: 0;
+  }
+
+  #ui-layer h1 {
+    display: none;
+  }
+
+  #ui-layer>p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  #guesses-list {
+    max-height: calc(3 * 40px);
+    /* Show exactly 3 items (approximate height per item) */
+  }
+}
+
+@media (max-width: 480px) {
+  #ui-layer {
+    padding: 12px;
+  }
+
+  #guesses-list {
+    max-height: calc(3 * 36px);
+    /* Slightly smaller on phones */
+  }
 }
 
 h1 {
@@ -53,6 +109,7 @@ h1 {
   text-align: center;
   background: linear-gradient(to right, #ff4d4d, #f9cb28);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -77,6 +134,27 @@ input:focus {
   border-color: #ff4d4d;
 }
 
+/* Mobile input improvements */
+@media (max-width: 768px) {
+  input {
+    font-size: 16px;
+    /* Prevents zoom on iOS */
+    padding: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .input-group {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  button {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
 button {
   padding: 10px 20px;
   border-radius: 6px;
@@ -98,6 +176,12 @@ button:hover {
   margin: 0;
   max-height: 300px;
   overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  #guesses-list {
+    max-height: 150px;
+  }
 }
 
 .guess-item {
@@ -132,13 +216,16 @@ button:hover {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.3);
 }
+
 ::-webkit-scrollbar-thumb {
   background: #444;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

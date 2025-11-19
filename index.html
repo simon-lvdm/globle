@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Globle</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <div id="ui-layer">
+    <h1>3D Globle</h1>
+    <p style="margin-bottom: 15px; font-size: 0.9em; color: #aaa;">Guess the mystery country!</p>
+
+    <div class="input-group">
+      <input type="text" id="guess-input" list="country-list" placeholder="Enter country..." />
+      <datalist id="country-list"></datalist>
+      <button id="submit-btn">Guess</button>
+    </div>
+
+    <button id="reveal-btn" style="width: 100%; margin-bottom: 20px; background: #444; font-size: 0.9em;">Give Up /
+      Reveal Answer</button>
+
+    <div id="win-message" class="win-message">
+      🎉 You found it! <br>
+      <span id="mystery-country-name"></span>
+      <br>
+      <button id="reset-btn" style="margin-top: 10px; background: #4dff4d; color: #000;">Play Again</button>
+    </div>
+
+    <ul id="guesses-list">
+      <!-- Guesses will appear here -->
+    </ul>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

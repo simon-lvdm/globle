@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://globle-3d.vercel.app/sitemap.xml

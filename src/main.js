@@ -305,6 +305,68 @@ function handleWin() {
   revealBtn.style.display = 'none';
 }
 
+// Tooltip Logic
+const tooltip = document.getElementById('tooltip');
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function onMouseMove(event) {
+  // Calculate mouse position in normalized device coordinates
+  // (-1 to +1) for both components
+
+  // We need to account for the canvas position if it's not full screen, 
+  // but here it covers the screen or a specific area.
+  // Since we have a responsive layout, let's use clientX/Y relative to window for now
+  // as the canvas is usually full width/height of its container.
+
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  // Update tooltip position
+  tooltip.style.left = event.clientX + 'px';
+  tooltip.style.top = event.clientY + 'px';
+
+  checkIntersection();
+}
+
+function checkIntersection() {
+  raycaster.setFromCamera(mouse, camera);
+
+  // Intersect with countries group
+  // Note: globe.countriesGroup contains groups of meshes
+  // We need to intersect recursively
+  const intersects = raycaster.intersectObjects(globe.countriesGroup.children, true);
+
+  if (intersects.length > 0) {
+    // Find the first object that has a name (some might be parts of a group)
+    // Our structure is Group -> Mesh. The Mesh has the name.
+    // Or Group (userData.name) -> Mesh (userData.parentName)
+
+    const object = intersects[0].object;
+    const name = object.userData.parentName || object.name;
+
+    // Only show tooltip if the country has been guessed
+    const isGuessed = guesses.some(g => g.name === name);
+
+    if (name && isGuessed) {
+      tooltip.textContent = name;
+      tooltip.classList.add('visible');
+      document.body.style.cursor = 'pointer';
+    } else {
+      hideTooltip();
+    }
+  } else {
+    hideTooltip();
+  }
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+  document.body.style.cursor = 'default';
+}
+
+window.addEventListener('mousemove', onMouseMove);
+
 // Event Listeners
 submitBtn.addEventListener('click', handleGuess);
 revealBtn.addEventListener('click', handleReveal);
